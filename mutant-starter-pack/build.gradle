@@ -1,0 +1,15 @@
+group 'org.droba'
+version '1.0-SNAPSHOT'
+
+dependencies {
+    compile project(":mutant-core")
+    compile project(":mutant-jetty-embedded-servlet")
+    compile project(":mutant-handlebars-template-renderer")
+    compile project(":mutant-gson-json-renderer")
+    compile project(":mutant-naive-router")
+
+    compile 'com.github.salomonbrys.kodein:kodein:3.1.0'
+    compile 'com.github.salomonbrys.kodein:kodein-conf:3.1.0'
+    compile 'ch.qos.logback:logback-classic:1.1.7'
+    compile 'ch.qos.logback:logback-core:1.1.7'
+}

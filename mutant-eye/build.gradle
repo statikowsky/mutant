@@ -1,0 +1,14 @@
+group 'org.droba'
+version '1.0-SNAPSHOT'
+
+sourceSets {
+    main.java.srcDirs += 'src/main'
+}
+
+dependencies {
+    compile project(":mutant-core")
+
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'net.bytebuddy:byte-buddy:1.5.6'
+    compile group: 'net.bytebuddy', name: 'byte-buddy-agent', version: '1.5.6'
+}

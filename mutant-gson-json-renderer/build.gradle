@@ -1,0 +1,9 @@
+group 'org.droba'
+version '1.0-SNAPSHOT'
+
+
+dependencies {
+    compile project(":mutant-core")
+
+    compile 'com.github.salomonbrys.kotson:kotson:2.3.0'
+}

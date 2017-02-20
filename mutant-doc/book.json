@@ -1,0 +1,11 @@
+{
+  "title": "Mutant",
+  "plugins": ["prism", "-highlight"],
+  "pluginsConfig": {
+    "theme-default": {
+      "styles": {
+        "website": "gitbook.css"
+      }
+    }
+  }
+}

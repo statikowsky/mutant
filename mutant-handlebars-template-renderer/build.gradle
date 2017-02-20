@@ -1,0 +1,8 @@
+group 'org.droba'
+version '1.0-SNAPSHOT'
+
+dependencies {
+    compile project(":mutant-core")
+
+    compile "com.github.jknack:handlebars:4.0.6"
+}
