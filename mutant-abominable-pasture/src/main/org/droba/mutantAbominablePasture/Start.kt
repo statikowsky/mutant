@@ -3,6 +3,7 @@ package org.droba.mutantAbominablePasture
 import com.github.salomonbrys.kotson.jsonObject
 import org.droba.mutant.*
 import org.droba.mutantAbominablePasture.dtos.ExampleUser
+import org.droba.mutantAbominablePasture.dtos.Test
 import org.droba.mutantAbominablePasture.middleware.AddMutatedByMutantHeader
 import org.droba.mutantAbominablePasture.middleware.SecurePasture
 import org.droba.mutantAbominablePasture.views.Hello
@@ -105,7 +106,5 @@ fun main(args: Array<String>) {
         registerReloadNotifier()
     })
 }
-
-data class Test (val name: String)
 
 class FakeException(message: String) : Exception(message)
