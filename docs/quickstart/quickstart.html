@@ -1,0 +1,382 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Quickstart · Mutant</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../gitbook.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="quickstart.html">
+            
+                <a href="quickstart.html">
+            
+                    
+                    Quickstart
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Quickstart</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="quickstart">Quickstart</h1>
+<p><em>This documentation is WIP</em></p>
+<p>Usually when starting your Mutant project you would first pick the modules you need. 
+But when you just want to get started quickly there is the <code>mutant-starter-pack</code>. 
+It&apos;s a <em>mostly</em> sane collection of Mutant modules.</p>
+<p>In this guide we will take a quick but very light on details look
+at some features of Mutant and it&apos;s modules. 
+If you ever want a more detailed overview follow the doc links to find more info!</p>
+<p>All the examples below use <code>mutant-starter-pack</code></p>
+<h4 id="your-first-mutant-application">Your first Mutant application</h4>
+<pre class="language-"><code class="lang-kotlin"><span class="token keyword">import</span> org<span class="token punctuation">.</span>droba<span class="token punctuation">.</span>mutantStarterPack<span class="token punctuation">.</span>mutant
+
+<span class="token keyword">fun</span> <span class="token function">main</span> <span class="token punctuation">(</span>args <span class="token operator">:</span> Array<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  mutant <span class="token punctuation">{</span>
+    <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;Hello World!&quot;</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Visit <code>localhost:8080</code> and you should be greeted with <code>Hello World!</code></p>
+<h4 id="routes">Routes</h4>
+<p>We can register routes inside <code>mutant { }</code> by using <code>get</code>, <code>post</code>, <code>put</code>, <code>delete</code>, <code>patch</code>, <code>head</code>, <code>options</code> and <code>trace</code>
+functions:</p>
+<pre class="language-"><code class="lang-kotlin"><span class="token comment" spellcheck="true">//verb    path   action</span>
+
+  <span class="token keyword">get</span>     <span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;fetch&quot;</span>  <span class="token punctuation">}</span>
+  <span class="token function">post</span>    <span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;create&quot;</span> <span class="token punctuation">}</span>
+  <span class="token function">put</span>     <span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;update&quot;</span> <span class="token punctuation">}</span>
+  <span class="token function">delete</span>  <span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;delete&quot;</span> <span class="token punctuation">}</span>
+  <span class="token function">patch</span>   <span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;patch&quot;</span>  <span class="token punctuation">}</span>
+</code></pre>
+<p>See <a href="">Routing</a> docs for more information.</p>
+<h4 id="request-info">Request info</h4>
+<p>You can access request information trough the <code>req</code> prop.
+Let&apos;s read and display the <code>User-Agent</code> header from the request:</p>
+<pre class="language-"><code class="lang-kotlin">  <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token string">&quot;/user-agent&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    req<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">&quot;User-Agent&quot;</span><span class="token punctuation">]</span> 
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>Visit <code>localhost:8080/user-agent</code> and you should see your user agent string!</p>
+<p>Some of the info you can get from <code>req</code>:</p>
+<pre class="language-"><code class="lang-kotlin">  req<span class="token punctuation">.</span>params      <span class="token comment" spellcheck="true">// get url params  ( ?id=slimyJelly )</span>
+  req<span class="token punctuation">.</span>pathParams  <span class="token comment" spellcheck="true">// get path params ( /creature/undeadJelly )</span>
+  req<span class="token punctuation">.</span>body        <span class="token comment" spellcheck="true">// get req body</span>
+  req<span class="token punctuation">.</span>headers     <span class="token comment" spellcheck="true">// get req headers</span>
+  req<span class="token punctuation">.</span>cookies     <span class="token comment" spellcheck="true">// get cookies</span>
+  req<span class="token punctuation">.</span>session     <span class="token comment" spellcheck="true">// get session</span>
+</code></pre>
+<p>See <a href="">MutantRequest</a> docs for more information.</p>
+<h4 id="working-with-json">Working with JSON</h4>
+<p><code>mutant-starter-pack</code> uses <code>mutant-gson-json-renderer</code> for easy json serialization
+and deserialization. 
+Let&apos;s write a route that reads json content from request body and returns json:</p>
+<pre class="language-"><code class="lang-kotlin">  <span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> surname<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+  <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token string">&quot;/json&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> req into User<span class="token operator">::</span><span class="token keyword">class</span>  <span class="token comment" spellcheck="true">// deserialize into User </span>
+    <span class="token function">json</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>                       <span class="token comment" spellcheck="true">// emit User as json</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment" spellcheck="true">// there is also an alternate way to achieve the same result </span>
+  <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token string">&quot;/json_alt&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> req<span class="token punctuation">.</span>into<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">// deserialize into User </span>
+    <span class="token function">json</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>                      <span class="token comment" spellcheck="true">// emit User as json</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>If you need to quickly construct a json object:</p>
+<pre class="language-"><code class="lang-kotlin">  <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token string">&quot;/json2&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">jsonObject</span><span class="token punctuation">(</span>
+        <span class="token string">&quot;name&quot;</span>    <span class="token keyword">to</span> <span class="token string">&quot;Rick&quot;</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;surname&quot;</span> <span class="token keyword">to</span> <span class="token string">&quot;Sanchez&quot;</span>    
+    <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>This would return a json object <code>{ name : &quot;Rick&quot;, surname : &quot;Sanchez&quot; }</code></p>
+<p>See <a href="">mutant-gson-json-renderer</a> docs for more information.</p>
+<h4 id="rendering-views">Rendering views</h4>
+<h5 id="rendering-views-with-kotlinxhtml">Rendering views with kotlinx.html</h5>
+<p>You can use <a href="https://github.com/Kotlin/kotlinx.html" target="_blank"><code>kotlinx.html</code></a> to write your views in Kotlin!
+<code>kotlinx.html</code> is a Kotlin DSL for building HTML. 
+You can check out how such views are organized in <a href="https://github.com/statikowsky/mutant/tree/master/mutant-abominable-pasture" target="_blank"><code>mutant-abominable-pasture</code></a> example project.</p>
+<h5 id="rendering-views-with-handlebars">Rendering views with handlebars</h5>
+<p><code>mutant-starter-pack</code> uses <code>mutant-handlebars-template-renderer</code> mutant module for template rendering.
+This renderer uses <code>handlebars.java</code> for template rendering. This module expects your template files to be located
+in the root of your project inside <code>/templates</code> directory.</p>
+<p>Let&apos;s create <code>user.hbs</code> template to our <code>/templates</code> directory:</p>
+<pre class="language-"><code class="lang-handlebars">   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>Hello there <span class="token handlebars"><span class="token delimiter punctuation">{{</span><span class="token variable">this</span><span class="token delimiter punctuation">}}</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>And now let&apos;s render our view:</p>
+<pre class="language-"><code class="lang-kotlin">   <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token string">&quot;/user&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Rick Sanchez&quot;</span><span class="token punctuation">)</span> 
+   <span class="token punctuation">}</span>
+</code></pre>
+<p>If you now visit <code>localhost:8080/user</code> you should see <code>Hello there Rick Sanchez</code>!</p>
+<p>See <a href="">mutant-handlebars-template-renderer</a> docs for more information.</p>
+<h4 id="organizing-controllers-and-controller-discovery">Organizing controllers and controller discovery</h4>
+<h5 id="organizing-controllers-manually">Organizing controllers manually</h5>
+<p>Instead of writing your actions when defining you routes e.g.</p>
+<pre class="language-"><code class="lang-kotlin">   <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token string">&quot;/controllerOrg&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token string">&quot;Let&apos;s organize!&quot;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>You can create separate classes or objects that will hold your actions
+and then bind them to your routes:</p>
+<p><code>controllers/UserController.kt</code></p>
+<pre class="language-"><code class="lang-kotlin">   <span class="token keyword">object</span> UserController <span class="token punctuation">{</span>
+     <span class="token keyword">val</span> <span class="token keyword">get</span>     <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Sry no users here yet!&quot;</span> <span class="token punctuation">}</span>
+     <span class="token keyword">val</span> create  <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to update yet!&quot;</span> <span class="token punctuation">}</span>
+     <span class="token keyword">val</span> summary <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to do here :(!&quot;</span> <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+</code></pre>
+<p>We can use the <code>act</code> helper so we do not have to specify the signature of our lambda. </p>
+<p><code>AppStart.kt</code></p>
+<pre class="language-"><code class="lang-kotlin">   mutant <span class="token punctuation">{</span>
+     <span class="token keyword">get</span><span class="token punctuation">(</span>  <span class="token string">&quot;/user/:id&quot;</span><span class="token punctuation">,</span>     UserController<span class="token operator">::</span><span class="token keyword">get</span><span class="token punctuation">)</span>
+     <span class="token function">post</span><span class="token punctuation">(</span> <span class="token string">&quot;/user&quot;</span><span class="token punctuation">,</span>         UserController<span class="token operator">::</span>create<span class="token punctuation">)</span>
+     <span class="token keyword">get</span><span class="token punctuation">(</span>  <span class="token string">&quot;/user/summary&quot;</span><span class="token punctuation">,</span> UserController<span class="token operator">::</span>summary<span class="token punctuation">)</span>     
+   <span class="token punctuation">}</span>
+</code></pre>
+<h5 id="using-controller-discovery">Using controller discovery</h5>
+<p>If you are ok with abiding with a few conventions you can use <code>ControllerDiscovery</code> from <code>mutant-controller-discovery</code> module.
+It is provided by default in <code>mutant-starter-pack</code>. It allows us to write and wire up controllers
+easily.
+To enable controller discovery in your project you need to call <code>DiscoverControllers()</code>
+in mutant setup:</p>
+<p><code>AppStart.kt</code></p>
+<pre class="language-"><code class="lang-kotlin">   mutant <span class="token punctuation">{</span>
+     <span class="token function">discoverControllers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+   <span class="token punctuation">}</span>
+</code></pre>
+<p><code>controllers/UserController.kt</code></p>
+<pre class="language-"><code class="lang-kotlin">   <span class="token keyword">object</span> UserController <span class="token punctuation">{</span>
+     <span class="token keyword">val</span> <span class="token keyword">get</span>          <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Sry no users here yet!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to GET  /user/:id</span>
+     <span class="token keyword">val</span> create       <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to update yet!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to POST /user</span>
+     <span class="token keyword">val</span> <span class="token annotation builtin">@Get</span> summary <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to do here :(!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to GET  /user/summary</span>
+   <span class="token punctuation">}</span>
+</code></pre>
+<p>See <a href="">mutant-controller-discovery</a> docs for more information.</p>
+<h4 id="database">Database</h4>
+<p><code>mutant-starter-pack</code> includes multiple db related packages:  </p>
+<ul>
+<li><code>mutant-hikari-cp</code> (database pool)</li>
+<li><code>mutant-jooq</code> (typesafe SQL dsl api)</li>
+<li><code>mutant-flyway</code> (migrations)</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight"],"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Mutant","gitbook":"*"},"file":{"path":"quickstart/quickstart.md","mtime":"2017-02-21T11:27:48.053Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-21T13:32:44.136Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
