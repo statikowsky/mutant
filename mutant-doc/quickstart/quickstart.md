@@ -1,5 +1,7 @@
 # Quickstart
 
+_This documentation is WIP_
+
 Usually when starting your Mutant project you would first pick the modules you need. 
 But when you just want to get started quickly there is the `mutant-starter-pack`. 
 It's a _mostly_ sane collection of Mutant modules.
@@ -8,11 +10,7 @@ In this guide we will take a quick but very light on details look
 at some features of Mutant and it's modules. 
 If you ever want a more detailed overview follow the doc links to find more info!
 
-To get started you can use the `mut` tool - just run `mut starter your_project_name` 
-and a new starter project will be created.
-
-If you want to create your own project please remember to add `mutant-starter-pack`
-dependency to your project!
+All the examples below use `mutant-starter-pack`
 
 #### Your first Mutant application
 
@@ -102,6 +100,14 @@ See [mutant-gson-json-renderer]() docs for more information.
 
 #### Rendering views
 
+##### Rendering views with kotlinx.html
+
+You can use [`kotlinx.html`](https://github.com/Kotlin/kotlinx.html) to write your views in Kotlin!
+`kotlinx.html` is a Kotlin DSL for building HTML. 
+You can check out how such views are organized in [`mutant-abominable-pasture`](https://github.com/statikowsky/mutant/tree/master/mutant-abominable-pasture) example project.
+
+##### Rendering views with handlebars
+
 `mutant-starter-pack` uses `mutant-handlebars-template-renderer` mutant module for template rendering.
 This renderer uses `handlebars.java` for template rendering. This module expects your template files to be located
 in the root of your project inside `/templates` directory.
@@ -124,6 +130,8 @@ If you now visit `localhost:8080/user` you should see `Hello there Rick Sanchez`
 See [mutant-handlebars-template-renderer]() docs for more information.
 
 #### Organizing controllers and controller discovery
+
+##### Organizing controllers manually
 
 Instead of writing your actions when defining you routes e.g.
 ```kotlin
@@ -153,6 +161,8 @@ We can use the `act` helper so we do not have to specify the signature of our la
    }
 ```
 
+##### Using controller discovery
+
 If you are ok with abiding with a few conventions you can use `ControllerDiscovery` from `mutant-controller-discovery` module.
 It is provided by default in `mutant-starter-pack`. It allows us to write and wire up controllers
 easily.
@@ -162,7 +172,7 @@ in mutant setup:
 `AppStart.kt`
 ```kotlin
    mutant {
-     DiscoverControllers()
+     discoverControllers()
    }
 ```
 
