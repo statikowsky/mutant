@@ -45,6 +45,7 @@ subprojects {
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         compile "org.slf4j:slf4j-api:1.7.21"
+        compile 'io.github.microutils:kotlin-logging:1.4.2'
     }
 
     sourceSets {

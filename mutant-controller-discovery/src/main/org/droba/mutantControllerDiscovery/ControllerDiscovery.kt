@@ -1,26 +1,26 @@
 package org.droba.mutantControllerDiscovery
 
-import org.slf4j.LoggerFactory
-import kotlin.reflect.KCallable
-
 import com.google.common.reflect.ClassPath
+import mu.KotlinLogging
 import org.droba.mutant.M
 import org.droba.mutant.Method
 import org.droba.mutant.Mutant
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
-import kotlin.reflect.KClass
+import kotlin.jvm.internal.Lambda
+import kotlin.reflect.*
+import kotlin.reflect.jvm.reflect
 
 object ControllerDiscovery {
 
-    val log = LoggerFactory.getLogger(ControllerDiscovery.javaClass)
+    private val log = KotlinLogging.logger {}
 
     val skipMethods = listOf("equals", "hashCode", "toString")
     val reservedMembers = listOf("index", "get", "delete", "update", "create")
     val controllerAnnotations = listOf(Get::class, Post::class, Delete::class, Put::class)
 
     fun Mutant.discoverControllers() {
-        log.info("Running controller discovery!")
+        log.info { "Running controller discovery!" }
 
         val cp = ClassPath.from(ClassLoader.getSystemClassLoader())
         val controllersPackages = cp.topLevelClasses
@@ -28,19 +28,26 @@ object ControllerDiscovery {
                 .distinctBy { it.packageName }
                 .sortedBy { it.packageName.length }
 
-        log.debug("Found packages: {}", controllersPackages.joinToString { it.packageName })
+        log.debug { "Found packages: ${controllersPackages.joinToString { it.packageName }}" }
 
         val controllerPackage = controllersPackages.first()
 
         val refs = Reflections(controllerPackage.packageName, SubTypesScanner(false))
-        refs.allTypes.forEach { log.debug("Found type: {}", it) }
+        refs.allTypes.forEach { log.debug{ "Found type: $it" } }
 
         refs.getSubTypesOf(Object::class.java)
                 .forEach {
                     val kClass = it.kotlin
 
-                    log.info("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~")
-                    log.info("Controller [{}], inspecting", kClass.qualifiedName)
+                    log.info { "~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~" }
+                    log.info { "Controller [${kClass.qualifiedName}], inspecting" }
+
+                    val isObject = kClass.objectInstance != null
+
+                    if (!isObject) {
+                        log.info { "${kClass.qualifiedName} is not an object" }
+                        return@forEach
+                    }
 
                     val controllerPath = kClass.qualifiedName!!
                             .removePrefix(controllerPackage.packageName)
@@ -48,60 +55,75 @@ object ControllerDiscovery {
                             .replaceFirst(".", "")
                             .replace(".", "/")
 
-                    log.info("Additional path (from root) [{}]", controllerPath)
-                    log.debug("Controller annotations: [{}]", kClass.annotations)
+                    log.info { "Additional path (from root) [$controllerPath]" }
+                    log.debug { "Controller annotations: [${kClass.annotations}]" }
 
-                    val isSingular = kClass.annotations.map{ it.annotationClass }.contains(Singular::class)
+                    val isSingular = kClass.annotations
+                            .map{ it.annotationClass }
+                            .contains(Singular::class)
 
-                    log.info("Is controller singular: {}", isSingular)
+                    log.info { "Is controller singular: $isSingular" }
 
-                    inspectMembersForRoutes(this, kClass, isSingular, controllerPath)
+                    inspectObjectPropertiesForRoutes(this, kClass, isSingular, controllerPath)
                 }
 
         log.info("Controller discovery complete.")
     }
 
-    fun inspectMembersForRoutes(mutant: Mutant, kClass: KClass<out Any>, isSingular: Boolean, controllerPath: String) {
-        kClass.members
+    fun inspectObjectPropertiesForRoutes(mutant: Mutant, kClass: KClass<out Any>, isSingular: Boolean, controllerPath: String) {
+
+        log.info("Inspecting object ${kClass.qualifiedName} properties for routes")
+
+        kClass.memberProperties
                 .filterNot { skipMethods.contains(it.name) }
                 .forEach memberIter@ {
-                    log.info("- - - - - - - - - - - - -")
-                    log.info("Member [{}], inspecting.", it.name)
-                    log.debug("Annotations {}", it.annotations)
+                    log.info { "- - - - - - - - - - - - -" }
+                    log.info { "Member [${it.name}], inspecting." }
+                    log.debug { "Annotations ${it.annotations}" }
 
                     if (!reservedMembers.contains(it.name)
                             && !it.annotations.map { it.annotationClass }.intersect(controllerAnnotations).any()) {
-                        log.info("This member is not named 'create', 'get', 'index', 'update', 'delete' nor")
+                        log.info("This property is not named 'create', 'get', 'index', 'update', 'delete' nor")
                         log.info("does it have an valid controller annotation (@Get, @Post, @Delete, @Put)")
                         log.info("so we are skipping it.")
 
-                        val annotations = it.annotations.map { it.annotationClass }
-                        annotations.forEach { log.debug(it.simpleName) }
-                        val intersection = annotations.intersect(controllerAnnotations)
-                        intersection.forEach { log.debug(it.simpleName) }
-                        log.debug("Intersection size: ${intersection.size}")
-
                         return@memberIter
                     }
 
-                    log.debug("It's return type is {}", it.returnType)
+                    log.debug("Type of return value is {}", it.returnType)
 
-                    val callResult = it.call(kClass.objectInstance)
+                    val actionLambda = it.call(kClass.objectInstance)
 
-                    if (callResult == null) {
-                        log.warn("Skipping member as we could not get a return type.")
+                    if (actionLambda == null) {
+                        log.warn("Skipping member as we could not get a result.")
                         displayWrongReturnTypeWarning()
                         return@memberIter
                     }
 
-                    if (callResult !is Function1<*, *>) {
-                        log.warn("Skipping member as it's return type is not Function1<*, *> but {}", callResult.javaClass)
-                        displayWrongReturnTypeWarning()
+                    val lambdaIntrospect : KFunction<*>? = (actionLambda as Lambda).reflect()
+
+                    if (lambdaIntrospect == null) {
+                        log.error { "Controller discovery was unable to introspect your lambda for property ${it.name}"  }
+                        return@memberIter
+                    }
+
+                    if (lambdaIntrospect.parameters.isEmpty()) {
+                        log.error { "Incorrect lambda type. This lambda does not have a M receiver." }
+                        return@memberIter
+                    }
+
+                    if(lambdaIntrospect.parameters[0].type != M::class.defaultType) {
+                        log.error { "Incorrect lambda type. This lambda does not have a M receiver." }
+                        return@memberIter
+                    }
+
+                    if (lambdaIntrospect.parameters.size > 1) {
+                        log.warn { "We currently do not support lambdas with more than one param." }
                         return@memberIter
                     }
 
                     val action : M.() -> Any = try {
-                        callResult as M.() -> Any
+                        actionLambda as M.() -> Any
                     } catch (e: Exception) {
                         log.warn("Skipping member as we could not cast the return type to M.() -> Any")
                         displayWrongReturnTypeWarning()

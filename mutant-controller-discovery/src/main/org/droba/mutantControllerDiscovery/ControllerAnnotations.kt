@@ -16,6 +16,10 @@ annotation class Delete
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Put
 
+@Target(AnnotationTarget.PROPERTY)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Path(val path: String)
+
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Singular

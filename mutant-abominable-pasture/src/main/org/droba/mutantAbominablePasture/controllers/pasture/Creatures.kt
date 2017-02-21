@@ -1,6 +1,5 @@
 package org.droba.mutantAbominablePasture.controllers.pasture
 
-import org.droba.mutant.Mutant
 import org.droba.mutant.Mutant.Companion.act
 import org.droba.mutant.MutantHalt
 
