@@ -7,7 +7,7 @@ project a lot is being reworked and refactored.  This work is not yet complete.
 
 #### Docs
 
-You can check out the _WIP_ docs [here](http://stg1.droba.org)
+You can check out the _WIP_ docs [here](https://statikowsky.github.io/mutant/)
 
 An example project is currently in the making in `mutant-abominable-pasture`
 
