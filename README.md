@@ -5,9 +5,13 @@ Mutant is a _very WIP_ Kotlin web kit.
 In the process of transforming Mutant from a private to a public
 project a lot is being reworked and refactored.  This work is not yet complete.
 
+#### Docs
+
 You can check out the _WIP_ docs [here](http://stg1.droba.org)
 
 An example project is currently in the making in `mutant-abominable-pasture`
+
+#### Todo
 
 There is a TODO for each module.  
 
@@ -22,5 +26,6 @@ Global TODO:
 - [ ] write a bunch of docs
 
 
-License   
+#### License   
+
 MIT
