@@ -1,4 +1,4 @@
-# <img src="../images/little_mutant_logo.png" height="80"> 
+# <img src="/images/little_mutant_logo.png" height="80"> 
 
 Mutant is a small framework for writing Kotlin web applications.
 
