@@ -33,7 +33,7 @@ inline fun <reified T : Any> MutantRequest.into() : T
         = GsonJsonRenderer.gson.fromJson<T>(body)
 
 infix fun <T: Any> String.into(klass: KClass<T>) : T
-    = GsonJsonRenderer.gson.fromJson(this, klass.java)
+        = GsonJsonRenderer.gson.fromJson(this, klass.java)
 
 inline fun <reified T : Any> String.into() : T
         = GsonJsonRenderer.gson.fromJson<T>(this)
