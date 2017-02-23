@@ -8,7 +8,7 @@ import org.droba.mutantAbominablePasture.dtos.PillDto
 import org.droba.mutantControllerDiscovery.Path
 import org.droba.mutantControllerDiscovery.Post
 
-object Caretakers {
+class Caretakers {
 
     private val log = KotlinLogging.logger { }
 
@@ -17,7 +17,7 @@ object Caretakers {
     }
 
     val index = act {
-        ok()
+        "Hello from Caretakers!"
     }
 
     val create : M.(CaretakerDto) -> Any = {

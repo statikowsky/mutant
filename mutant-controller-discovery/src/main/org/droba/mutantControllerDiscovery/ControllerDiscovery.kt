@@ -42,13 +42,6 @@ object ControllerDiscovery {
                     log.info { "~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~" }
                     log.info { "Controller [${kClass.qualifiedName}], inspecting" }
 
-                    val isObject = kClass.objectInstance != null
-
-                    if (!isObject) {
-                        log.info { "${kClass.qualifiedName} is not an object" }
-                        return@forEach
-                    }
-
                     val controllerPath = kClass.qualifiedName!!
                             .removePrefix(controllerPackage.packageName)
                             .removeSuffix(kClass.simpleName!!)
@@ -74,6 +67,8 @@ object ControllerDiscovery {
 
         log.info("Inspecting object ${kClass.qualifiedName} properties for routes")
 
+        val instance = getKClassInstance(kClass) ?: return
+
         kClass.memberProperties
                 .filterNot { skipMethods.contains(it.name) }
                 .forEach memberIter@ {
@@ -92,7 +87,7 @@ object ControllerDiscovery {
 
                     log.debug("Type of return value is {}", it.returnType)
 
-                    val actionLambda = it.call(kClass.objectInstance)
+                    val actionLambda = it.call(instance)
 
                     if (actionLambda == null) {
                         log.warn("Skipping member as we could not get a result.")
@@ -112,7 +107,7 @@ object ControllerDiscovery {
                         return@memberIter
                     }
 
-                    if(lambdaIntrospect.parameters[0].type != M::class.defaultType) {
+                    if (lambdaIntrospect.parameters[0].type != M::class.defaultType) {
                         log.error { "Incorrect lambda type. This lambda does not have a M receiver." }
                         return@memberIter
                     }
@@ -181,6 +176,23 @@ object ControllerDiscovery {
                 "Put"       -> mutant.registerRoute(Method.PUT, route, action)
                 else        -> log.error("Could not add this member, unknown annotation :(")
             }
+        }
+    }
+
+    fun getKClassInstance(kClass: KClass<out Any>) : Any? {
+
+        val isObject = kClass.objectInstance != null
+
+        return if (isObject) {
+            kClass.objectInstance
+        } else {
+
+            if (kClass.primaryConstructor?.parameters?.isNotEmpty()!!) {
+                log.error { "Class ${kClass.qualifiedName} routes cannot be discovered as it lacks a parameterless constructor." }
+                return null
+            }
+
+            kClass.primaryConstructor?.call()
         }
     }
 
