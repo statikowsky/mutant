@@ -57,7 +57,7 @@ class NaiveRouter : MutantRouter {
                 log.info("Found dynamic handle {}", mutantRoute.route)
 
                 // get dynamic pathParamsWithValues
-                val pathParamsWithValues = HashMap<String, String>()
+                val pathParamsWithValues = linkedMapOf<String, String>()
 
                 routeRegex.findAll(route, 0).forEach {
                     for(i in 1..it.groups.size-1) {

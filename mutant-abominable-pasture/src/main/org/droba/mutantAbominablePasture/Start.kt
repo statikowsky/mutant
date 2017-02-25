@@ -2,13 +2,15 @@ package org.droba.mutantAbominablePasture
 
 import com.github.salomonbrys.kotson.jsonObject
 import org.droba.mutant.*
+import org.droba.mutantAbominablePasture.dtos.CaretakerDto
 import org.droba.mutantAbominablePasture.dtos.ExampleUser
+import org.droba.mutantAbominablePasture.dtos.PillDto
 import org.droba.mutantAbominablePasture.dtos.Test
 import org.droba.mutantAbominablePasture.middleware.AddMutatedByMutantHeader
 import org.droba.mutantAbominablePasture.middleware.SecurePasture
 import org.droba.mutantAbominablePasture.views.Hello
 import org.droba.mutantAbominablePasture.views.TestForm
-import org.droba.mutantControllerDiscovery.ControllerDiscovery.discoverControllers
+import org.droba.mutantControllerDiscovery.discoverControllers
 import org.droba.mutantGsonJsonRenderer.into
 import org.droba.mutantGsonJsonRenderer.json
 import org.droba.mutantHandlebarsTemplateRenderer.view
@@ -19,7 +21,10 @@ fun main(args: Array<String>) {
 
     haloMutant({
 
-        discoverControllers()
+        discoverControllers {
+            store<CaretakerDto>()
+            store<PillDto>()
+        }
 
         get("/")
             { Hello.view() }

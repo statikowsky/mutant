@@ -66,5 +66,6 @@ your `mutant { }` config.
 
 TODO:
 - [ ] add @Path annotation for path override
-- [ ] discover class controllers
-- [ ] bind args in class controller methods
+- [ ] add path query bindings (in addition to model and path param binding)
+- [ ] allow automatic model discovery (for saving type information, kotlin reflection workaround)
+
