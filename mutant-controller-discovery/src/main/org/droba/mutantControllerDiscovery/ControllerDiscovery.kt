@@ -75,9 +75,7 @@ class ControllerDiscovery(
 
     private fun inspectObjectPropertiesForRoutes(kClass: KClass<out Any>, controllerPath: String) {
 
-        val isSingular = kClass.annotations
-                .map{ it.annotationClass }
-                .contains(Singular::class)
+        val isSingular = kClass.annotations.any { it.annotationClass == Singular::class }
 
         log.info { "Is controller singular: $isSingular" }
 
