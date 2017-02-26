@@ -10,12 +10,14 @@ class MutantPathAndQueryParamBinder : PathAndQueryParamBinder {
     val binders = mutableMapOf<KType, (String) -> Any>()
 
     init {
-        binders.put(String::class.defaultType,  { string -> string })
-        binders.put(Int::class.defaultType,     String::toInt)
-        binders.put(Long::class.defaultType,    String::toLong)
-        binders.put(Float::class.defaultType,   String::toFloat)
-        binders.put(Double::class.defaultType,  String::toDouble)
-        binders.put(Char::class.defaultType,    String::toDouble)
+        with(binders) {
+            put(String::class.defaultType,  { string -> string })
+            put(Int::class.defaultType,     String::toInt)
+            put(Long::class.defaultType,    String::toLong)
+            put(Float::class.defaultType,   String::toFloat)
+            put(Double::class.defaultType,  String::toDouble)
+            put(Char::class.defaultType,    String::toDouble)
+        }
     }
 
     override fun bindPathParam(value: String, type: KType) : Any {
