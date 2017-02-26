@@ -19,7 +19,6 @@ import kotlin.reflect.jvm.reflect
 fun Mutant.discoverControllers(modelConfig: MutantModelBinder.() -> Unit = {}) {
     ControllerDiscovery(this, modelBinder { modelConfig() }, MutantPathAndQueryParamBinder())
             .discoverControllers()
-
 }
 
 fun Mutant.discoverControllers(modelBinder: ModelBinder, pathAndQueryParamBinder: PathAndQueryParamBinder) {

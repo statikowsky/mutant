@@ -65,7 +65,10 @@ When using controller discovery you can still use custom routes in
 your `mutant { }` config.
 
 TODO:
-- [ ] add @Path annotation for path override
-- [ ] add path query bindings (in addition to model and path param binding)
+- [ ] model binding with form data
+- [ ] doc multiparam actions in controllers
+- [ ] doc binding
 - [ ] allow automatic model discovery (for saving type information, kotlin reflection workaround)
+- [ ] although user can implement their own Model and Path binder allow customization of MutantModelBinder and MutantPathAndQueryBinder
+
 

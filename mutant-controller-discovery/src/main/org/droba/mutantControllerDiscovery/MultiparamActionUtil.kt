@@ -37,6 +37,13 @@ object MultiparamActionUtil {
         return indexOfLambaParam to argValue
     }
 
+    /**
+     *  Wraps multi parameter actionLambda into a single _binding_ M receiver lambda.
+     *
+     *  The new lambda will be binding in the sense that it will try to provide the necessary
+     *  arguments for the multi parameter actionLambda by using the provided `ModelBinder` and
+     *  `PathAndQueryParamBinder`
+     */
     fun wrapWithBindingAction(actionLambda: Lambda,
                               lambdaIntrospect: KFunction<*>,
                               modelBinder: ModelBinder,
