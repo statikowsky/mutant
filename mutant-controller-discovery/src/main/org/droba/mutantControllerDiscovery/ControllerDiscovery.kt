@@ -9,12 +9,18 @@ import org.droba.mutantControllerDiscovery.binders.ModelBinder
 import org.droba.mutantControllerDiscovery.binders.PathAndQueryParamBinder
 import org.droba.mutantControllerDiscovery.binders.mutantBinders.MutantModelBinder
 import org.droba.mutantControllerDiscovery.binders.mutantBinders.MutantPathAndQueryParamBinder
+import org.droba.mutantControllerDiscovery.binders.mutantBinders.discoverModels
 import org.droba.mutantControllerDiscovery.binders.mutantBinders.modelBinder
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import kotlin.jvm.internal.Lambda
 import kotlin.reflect.*
 import kotlin.reflect.jvm.reflect
+
+fun Mutant.discoverControllersAndModels() {
+    ControllerDiscovery(this, modelBinder { discoverModels() }, MutantPathAndQueryParamBinder())
+            .discoverControllers()
+}
 
 fun Mutant.discoverControllers(modelConfig: MutantModelBinder.() -> Unit = {}) {
     ControllerDiscovery(this, modelBinder { modelConfig() }, MutantPathAndQueryParamBinder())

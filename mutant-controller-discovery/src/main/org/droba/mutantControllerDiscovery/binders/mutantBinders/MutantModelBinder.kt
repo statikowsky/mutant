@@ -24,6 +24,9 @@ class MutantModelBinder : ModelBinder {
     inline fun <reified T: Any> store()
             = kotlinKTypeToClassMap.put(T::class.defaultType, T::class.java)
 
+    fun store(kType: KType, javaClass: Class<*>)
+            = kotlinKTypeToClassMap.put(kType, javaClass)
+
     override fun bindModel(type: KType, req: MutantRequest) : Any {
         return if (req.isJson)
             jsonConverter(type, req)
