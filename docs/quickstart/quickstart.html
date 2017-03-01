@@ -162,13 +162,14 @@
                                 
                                 <h1 id="quickstart">Quickstart</h1>
 <p><em>This documentation is WIP</em></p>
-<p>Usually when starting your Mutant project you would first pick the modules you need. 
-But when you just want to get started quickly there is the <code>mutant-starter-pack</code>. 
-It&apos;s a <em>mostly</em> sane collection of Mutant modules.</p>
-<p>In this guide we will take a quick but very light on details look
-at some features of Mutant and it&apos;s modules. 
-If you ever want a more detailed overview follow the doc links to find more info!</p>
-<p>All the examples below use <code>mutant-starter-pack</code></p>
+<p>To get started quick with Mutant use <code>mutant-starter-pack</code> a <em>mostly</em> sane
+collection of Mutant modules. Once you are in no rush you can pick and choose
+the modules you <em>really</em> need.</p>
+<p>We will now make a quick overview of modules include in <code>mutant-starter-pack</code>. 
+It&apos;ll be light on the details but you can always follow the doc link to find out more!</p>
+<p>Remember to add <code>mutant-starter-pack</code> dependency in your build system of choice.
+In case you are using <code>gradle</code> add:</p>
+<p><code>gradle placeholder</code></p>
 <h4 id="your-first-mutant-application">Your first Mutant application</h4>
 <pre class="language-"><code class="lang-kotlin"><span class="token keyword">import</span> org<span class="token punctuation">.</span>droba<span class="token punctuation">.</span>mutantStarterPack<span class="token punctuation">.</span>mutant
 
@@ -179,6 +180,7 @@ If you ever want a more detailed overview follow the doc links to find more info
 <span class="token punctuation">}</span>
 </code></pre>
 <p>Visit <code>localhost:8080</code> and you should be greeted with <code>Hello World!</code></p>
+<p>See <a href="">Mutant builder</a> docs for more information. </p>
 <h4 id="routes">Routes</h4>
 <p>We can register routes inside <code>mutant { }</code> by using <code>get</code>, <code>post</code>, <code>put</code>, <code>delete</code>, <code>patch</code>, <code>head</code>, <code>options</code> and <code>trace</code>
 functions:</p>
@@ -202,6 +204,7 @@ Let&apos;s read and display the <code>User-Agent</code> header from the request:
 <p>Some of the info you can get from <code>req</code>:</p>
 <pre class="language-"><code class="lang-kotlin">  req<span class="token punctuation">.</span>params      <span class="token comment" spellcheck="true">// get url params  ( ?id=slimyJelly )</span>
   req<span class="token punctuation">.</span>pathParams  <span class="token comment" spellcheck="true">// get path params ( /creature/undeadJelly )</span>
+  req<span class="token punctuation">.</span>formParams  <span class="token comment" spellcheck="true">// get form params ( from x-www-form-urlencoded ) </span>
   req<span class="token punctuation">.</span>body        <span class="token comment" spellcheck="true">// get req body</span>
   req<span class="token punctuation">.</span>headers     <span class="token comment" spellcheck="true">// get req headers</span>
   req<span class="token punctuation">.</span>cookies     <span class="token comment" spellcheck="true">// get cookies</span>
@@ -270,7 +273,8 @@ and then bind them to your routes:</p>
      <span class="token keyword">val</span> summary <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to do here :(!&quot;</span> <span class="token punctuation">}</span>
    <span class="token punctuation">}</span>
 </code></pre>
-<p>We can use the <code>act</code> helper so we do not have to specify the signature of our lambda. </p>
+<p>We can use the <code>act</code> helper so we do not have to specify the signature of our lambda. 
+Then we can reference our actions when mapping our routes:</p>
 <p><code>AppStart.kt</code></p>
 <pre class="language-"><code class="lang-kotlin">   mutant <span class="token punctuation">{</span>
      <span class="token keyword">get</span><span class="token punctuation">(</span>  <span class="token string">&quot;/user/:id&quot;</span><span class="token punctuation">,</span>     UserController<span class="token operator">::</span><span class="token keyword">get</span><span class="token punctuation">)</span>
@@ -293,10 +297,16 @@ in mutant setup:</p>
 <pre class="language-"><code class="lang-kotlin">   <span class="token keyword">object</span> UserController <span class="token punctuation">{</span>
      <span class="token keyword">val</span> <span class="token keyword">get</span>          <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Sry no users here yet!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to GET  /user/:id</span>
      <span class="token keyword">val</span> create       <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to update yet!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to POST /user</span>
-     <span class="token keyword">val</span> <span class="token annotation builtin">@Get</span> summary <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to do here :(!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to GET  /user/summary</span>
+     <span class="token annotation builtin">@Get</span> <span class="token keyword">val</span> summary <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to do here :(!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to GET  /user/summary</span>
+
+     <span class="token annotation builtin">@Post</span> <span class="token annotation builtin">@Path</span><span class="token punctuation">(</span><span class="token string">&quot;/details/:shirt/nonsensical/&quot;</span><span class="token punctuation">)</span>
+     <span class="token keyword">val</span> nonsensical M<span class="token punctuation">.</span><span class="token punctuation">(</span>String<span class="token punctuation">,</span> DetailsDto<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> Any <span class="token operator">=</span> <span class="token punctuation">{</span>
+         shirt<span class="token punctuation">,</span> detailsDto <span class="token operator">-&gt;</span> <span class="token string">&quot;What are you doing?&quot;</span>
+     <span class="token punctuation">}</span>
    <span class="token punctuation">}</span>
 </code></pre>
-<p>See <a href="">mutant-controller-discovery</a> docs for more information.</p>
+<p>Controller discovery has a bit more options that allow you to customize the mapping of routes in your controllers. 
+See <a href="">mutant-controller-discovery</a> docs for more information.</p>
 <h4 id="database">Database</h4>
 <p><code>mutant-starter-pack</code> includes multiple db related packages:  </p>
 <ul>
@@ -343,7 +353,7 @@ in mutant setup:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight"],"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Mutant","gitbook":"*"},"file":{"path":"quickstart/quickstart.md","mtime":"2017-02-21T11:27:48.053Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-21T13:40:25.131Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight"],"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Mutant","gitbook":"*"},"file":{"path":"quickstart/quickstart.md","mtime":"2017-03-01T20:25:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-01T20:54:15.193Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
