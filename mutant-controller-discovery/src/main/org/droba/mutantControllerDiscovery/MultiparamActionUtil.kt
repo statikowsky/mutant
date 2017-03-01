@@ -1,5 +1,6 @@
 package org.droba.mutantControllerDiscovery
 
+import org.droba.mutant.Action
 import org.droba.mutant.M
 import org.droba.mutant.Mutant
 import org.droba.mutant.MutantHalt
@@ -47,7 +48,7 @@ object MultiparamActionUtil {
     fun wrapWithBindingAction(actionLambda: Lambda,
                               lambdaIntrospect: KFunction<*>,
                               modelBinder: ModelBinder,
-                              pathAndQueryParamBinder: PathAndQueryParamBinder) : M.() -> Any {
+                              pathAndQueryParamBinder: PathAndQueryParamBinder) : Action {
 
         val lambdaParamsWithoutReceiver = lambdaIntrospect.parameters
                 .slice(1..lambdaIntrospect.parameters.size - 1)

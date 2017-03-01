@@ -13,11 +13,13 @@ data class Message(val message: String, val details: String, val stackTrace: Str
 
 private val log = LoggerFactory.getLogger(Mutant::class.java)
 
+typealias Action = M.() -> Any
+
 class Mutant {
 
     companion object {
         fun process(processor: (Any) -> MutantResponse?) : (Any) -> MutantResponse? = processor
-        fun act(action: M.() -> Any) : M.() -> Any = action
+        fun act(action: Action) : Action = action
 
         fun setup(mutantConfig: Mutant.() -> Unit) : Mutant {
 
@@ -47,15 +49,15 @@ class Mutant {
         if (router is DummyRouter) throw RuntimeException("In mutant setup you MUST specify a router.")
     }
 
-    fun get     (route: String, action: M.() -> Any) = registerRoute(GET, route, action)
-    fun post    (route: String, action: M.() -> Any) = registerRoute(POST, route, action)
-    fun delete  (route: String, action: M.() -> Any) = registerRoute(DELETE, route, action)
-    fun put     (route: String, action: M.() -> Any) = registerRoute(PUT, route, action)
-    fun head    (route: String, action: M.() -> Any) = registerRoute(HEAD, route, action)
-    fun options (route: String, action: M.() -> Any) = registerRoute(OPTIONS, route, action)
-    fun trace   (route: String, action: M.() -> Any) = registerRoute(TRACE, route, action)
+    fun get     (route: String, action: Action) = registerRoute(GET,    route, action)
+    fun post    (route: String, action: Action) = registerRoute(POST,   route, action)
+    fun delete  (route: String, action: Action) = registerRoute(DELETE, route, action)
+    fun put     (route: String, action: Action) = registerRoute(PUT,    route, action)
+    fun head    (route: String, action: Action) = registerRoute(HEAD,   route, action)
+    fun options (route: String, action: Action) = registerRoute(OPTIONS,route, action)
+    fun trace   (route: String, action: Action) = registerRoute(TRACE,  route, action)
 
-    fun registerRoute(method: Method, route: String, action: M.() -> Any) {
+    fun registerRoute(method: Method, route: String, action: Action) {
         log.debug("Registering route: {} {} -> {}", method, route, action.javaClass)
         router.registerRoute(method, route, action)
     }

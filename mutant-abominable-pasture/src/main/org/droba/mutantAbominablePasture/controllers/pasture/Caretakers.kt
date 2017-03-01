@@ -3,7 +3,6 @@ package org.droba.mutantAbominablePasture.controllers.pasture
 import com.github.salomonbrys.kotson.jsonObject
 import mu.KotlinLogging
 import org.droba.mutant.*
-import org.droba.mutant.Mutant.Companion.act
 import org.droba.mutantAbominablePasture.dtos.CaretakerDto
 import org.droba.mutantAbominablePasture.dtos.PillDto
 import org.droba.mutantControllerDiscovery.Get
@@ -20,7 +19,7 @@ class Caretakers {
         id -> ok()
     }
 
-    val index = act {
+    val index : Action = {
         "Hello from Caretakers!"
     }
 

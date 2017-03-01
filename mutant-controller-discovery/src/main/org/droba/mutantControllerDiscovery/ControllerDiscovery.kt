@@ -2,6 +2,7 @@ package org.droba.mutantControllerDiscovery
 
 import com.google.common.reflect.ClassPath
 import mu.KotlinLogging
+import org.droba.mutant.Action
 import org.droba.mutant.M
 import org.droba.mutant.Method
 import org.droba.mutant.Mutant
@@ -137,11 +138,11 @@ class ControllerDiscovery(
                     }
                     else {
                         try {
-                            actionLambda as M.() -> Any
+                            actionLambda as Action
                         } catch (e: Exception) {
-                            log.warn { "Skipping member as we could not cast the return type to M.() -> Any" }
+                            log.warn { "Skipping member as we could not cast the return type to M.() -> Any (Action)" }
                             displayWrongReturnTypeWarning()
-                            log.error ("Encountered exception while trying to cast to M.() -> Any", e )
+                            log.error ("Encountered exception while trying to cast to M.() -> Any (Action)", e )
                             return@memberIter
                         }
                     }
@@ -166,7 +167,7 @@ class ControllerDiscovery(
                 }
     }
 
-    private fun addSingular(mutant: Mutant, it: KCallable<*>, routeOverride: String?, route: String, action: M.() -> Any) {
+    private fun addSingular(mutant: Mutant, it: KCallable<*>, routeOverride: String?, route: String, action: Action) {
         when (it.name) {
             "get"       -> mutant.registerRoute(Method.GET,    routeOverride ?: route, action)
             "create"    -> mutant.registerRoute(Method.POST,   routeOverride ?: route, action)
@@ -176,7 +177,7 @@ class ControllerDiscovery(
         }
     }
 
-    private fun addPlural(mutant: Mutant, it: KCallable<*>, routeOverride: String?, route: String, action: M.() -> Any) {
+    private fun addPlural(mutant: Mutant, it: KCallable<*>, routeOverride: String?, route: String, action: Action) {
         when (it.name) {
             "index"     -> mutant.registerRoute(Method.GET,    routeOverride ?: route, action)
             "get"       -> mutant.registerRoute(Method.GET,    routeOverride ?: route + "/:id", action)
@@ -187,7 +188,7 @@ class ControllerDiscovery(
         }
     }
 
-    private fun addMethod(mutant: Mutant, it: KCallable<*>, route: String, action: M.() -> Any) {
+    private fun addMethod(mutant: Mutant, it: KCallable<*>, route: String, action: Action) {
         if (it.annotations.isEmpty()) {
             log.warn("Skipping member as this member has no annotations.")
             log.warn("You probably want to annotate this member ")

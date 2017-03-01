@@ -14,18 +14,18 @@ class NaiveRouter : MutantRouter {
     )
 
     private val log = LoggerFactory.getLogger(MutantRouter::class.java)
-    private val routes = LinkedHashMap<MutantRoute, M.() -> Any>()
+    private val routes = LinkedHashMap<MutantRoute, Action>()
 
-    override fun registerRoute(method: Method, route: String, action: M.() -> Any) {
+    override fun registerRoute(method: Method, route: String, action: Action) {
         val mutantRoute = mapToMutantRoute(method, route)
         routes.put(mutantRoute, action)
     }
 
-    override fun matchToAction(req: MutantRequest): M.() -> Any
+    override fun matchToAction(req: MutantRequest): Action
         = checkStaticRoutes(req)
             ?: checkDynamicRoutes(req)
 
-    fun checkStaticRoutes(req: MutantRequest) : (M.() -> Any)? {
+    fun checkStaticRoutes(req: MutantRequest) : Action? {
 
         val method = req.method
         val route = req.path
@@ -41,7 +41,7 @@ class NaiveRouter : MutantRouter {
         return null
     }
 
-    fun checkDynamicRoutes(req: MutantRequest) : M.() -> Any {
+    fun checkDynamicRoutes(req: MutantRequest) : Action {
 
         val method = req.method
         val route = req.path
