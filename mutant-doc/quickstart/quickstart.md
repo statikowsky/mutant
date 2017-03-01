@@ -6,9 +6,8 @@ To get started quick with Mutant use `mutant-starter-pack` a _mostly_ sane
 collection of Mutant modules. Once you are in no rush you can pick and choose
 the modules you _really_ need.
 
-We will now go trough a small little tutorial app higlighting some of the modules
-included in `mutant-starter-pack`. It'll be light on the details but you can always
-follow the doc link to find out more!
+We will now make a quick overview of modules include in `mutant-starter-pack`. 
+It'll be light on the details but you can always follow the doc link to find out more!
 
 Remember to add `mutant-starter-pack` dependency in your build system of choice.
 In case you are using `gradle` add:
@@ -63,6 +62,7 @@ Some of the info you can get from `req`:
 ```kotlin
   req.params      // get url params  ( ?id=slimyJelly )
   req.pathParams  // get path params ( /creature/undeadJelly )
+  req.formParams  // get form params ( from x-www-form-urlencoded ) 
   req.body        // get req body
   req.headers     // get req headers
   req.cookies     // get cookies
@@ -156,6 +156,7 @@ and then bind them to your routes:
 ```
 
 We can use the `act` helper so we do not have to specify the signature of our lambda. 
+Then we can reference our actions when mapping our routes:
 
 `AppStart.kt`
 ```kotlin
@@ -186,10 +187,16 @@ in mutant setup:
    object UserController {
      val get          = act { "Sry no users here yet!" } // will map to GET  /user/:id
      val create       = act { "Nothing to update yet!" } // will map to POST /user
-     val @Get summary = act { "Nothing to do here :(!" } // will map to GET  /user/summary
+     @Get val summary = act { "Nothing to do here :(!" } // will map to GET  /user/summary
+     
+     @Post @Path("/details/:shirt/nonsensical/")
+     val nonsensical M.(String, DetailsDto) -> Any = {
+     	shirt, detailsDto -> "What are you doing?"
+     }
    }
 ```
 
+Controller discovery has a bit more options that allow you to customize the mapping of routes in your controllers. 
 See [mutant-controller-discovery]() docs for more information.
 
 
