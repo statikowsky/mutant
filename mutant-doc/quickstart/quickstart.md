@@ -29,6 +29,8 @@ fun main (args : Array<String>) {
 
 Visit `localhost:8080` and you should be greeted with `Hello World!`
 
+See [Mutant builder]() docs for more information. 
+
 #### Routes
 
 We can register routes inside `mutant { }` by using `get`, `post`, `put`, `delete`, `patch`, `head`, `options` and `trace`
