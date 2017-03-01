@@ -2,15 +2,18 @@
 
 _This documentation is WIP_
 
-Usually when starting your Mutant project you would first pick the modules you need. 
-But when you just want to get started quickly there is the `mutant-starter-pack`. 
-It's a _mostly_ sane collection of Mutant modules.
+To get started quick with Mutant use `mutant-starter-pack` a _mostly_ sane
+collection of Mutant modules. Once you are in no rush you can pick and choose
+the modules you _really_ need.
 
-In this guide we will take a quick but very light on details look
-at some features of Mutant and it's modules. 
-If you ever want a more detailed overview follow the doc links to find more info!
+We will now go trough a small little tutorial app higlighting some of the modules
+included in `mutant-starter-pack`. It'll be light on the details but you can always
+follow the doc link to find out more!
 
-All the examples below use `mutant-starter-pack`
+Remember to add `mutant-starter-pack` dependency in your build system of choice.
+In case you are using `gradle` add:
+
+` gradle placeholder `
 
 #### Your first Mutant application
 
