@@ -1,15 +1,16 @@
 # Mutant
 
-Mutant is a _very WIP_ Kotlin web kit.
+Mutant is a _very WIP_ Kotlin web kit aiming to be developer friendly,  
+fun and frictionless is the guiding mantra.
 
-In the process of transforming Mutant from a private to a public
-project a lot is being reworked and refactored.  This work is not yet complete.
+```kotlin
+mutant {
+	get("/") { "Hello world!" }
+}
+```
 
-#### Docs
+Visit [docs](https://statikowsky.github.io/mutant/) for more information.
 
-You can check out the _WIP_ docs [here](https://statikowsky.github.io/mutant/)
-
-An example project is currently in the making in `mutant-abominable-pasture`
 
 #### Todo
 
