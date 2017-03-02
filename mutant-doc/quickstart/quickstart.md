@@ -149,15 +149,15 @@ and then bind them to your routes:
 `controllers/UserController.kt`
 ```kotlin
    object UserController {
-     val get     = act { "Sry no users here yet!" }
-     val create  = act { "Nothing to update yet!" }
-     val summary = act { "Nothing to do here :(!" }
+     val get     : Action = { "Sry no users here yet!" }
+     val create  : Action = { "Nothing to update yet!" }
+     val summary : Action = { "Nothing to do here :(!" }
    }
 ```
 
-We can use the `act` helper so we do not have to specify the signature of our lambda. 
-Then we can reference our actions when mapping our routes:
+Note that the lambdas are of type `Action`. `Action` is a typealias for `M.() -> Any`.  
 
+You can then reference your actions in Mutant setup:
 `AppStart.kt`
 ```kotlin
    mutant {
@@ -185,10 +185,21 @@ in mutant setup:
 `controllers/UserController.kt`
 ```kotlin
    object UserController {
-     val get          = act { "Sry no users here yet!" } // will map to GET  /user/:id
-     val create       = act { "Nothing to update yet!" } // will map to POST /user
-     @Get val summary = act { "Nothing to do here :(!" } // will map to GET  /user/summary
+     val get    : Action = act { "Sry no users here yet!" } // will map to GET  /user/:id
+     val create : Action = act { "Nothing to update yet!" } // will map to POST /user
+
+     // non-default routes need to be annoted with http methods
+     // check out controller discovery docs for more info
+     @Get val summary : Action = { "Nothing to do here :(!" } 
      
+     // all routes get automatic paths from field name, we can override the default by 
+     // using @Path annotation
+     @Path("/dancers")
+     @Get val listDancers : Action = { userService.getDancers() }
+     
+     // by using Kotlins type system we can tell controller discovery to bind request values
+     // to lambdas parameters
+     // check out controller discovery docs for more info
      @Post @Path("/details/:shirt/nonsensical/")
      val nonsensical M.(String, DetailsDto) -> Any = {
      	shirt, detailsDto -> "What are you doing?"
@@ -196,9 +207,7 @@ in mutant setup:
    }
 ```
 
-Controller discovery has a bit more options that allow you to customize the mapping of routes in your controllers. 
 See [mutant-controller-discovery]() docs for more information.
-
 
 #### Database
 
