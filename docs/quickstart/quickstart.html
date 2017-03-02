@@ -295,21 +295,32 @@ in mutant setup:</p>
 </code></pre>
 <p><code>controllers/UserController.kt</code></p>
 <pre class="language-"><code class="lang-kotlin">   <span class="token keyword">object</span> UserController <span class="token punctuation">{</span>
-     <span class="token keyword">val</span> <span class="token keyword">get</span>    <span class="token operator">:</span> Action <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Sry no users here yet!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to GET  /user/:id</span>
-     <span class="token keyword">val</span> create <span class="token operator">:</span> Action <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to update yet!&quot;</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// will map to POST /user</span>
+     <span class="token comment" spellcheck="true">// default routes</span>
+     <span class="token comment" spellcheck="true">//</span>
+     <span class="token comment" spellcheck="true">// get will map to GET `/user/:id`</span>
+     <span class="token comment" spellcheck="true">// create will map to POST `/user`</span>
 
-     <span class="token comment" spellcheck="true">// non-default routes need to be annoted with http methods</span>
-     <span class="token comment" spellcheck="true">// check out controller discovery docs for more info</span>
+     <span class="token keyword">val</span> <span class="token keyword">get</span>    <span class="token operator">:</span> Action <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Sry no users here yet!&quot;</span> <span class="token punctuation">}</span> 
+     <span class="token keyword">val</span> create <span class="token operator">:</span> Action <span class="token operator">=</span> act <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to update yet!&quot;</span> <span class="token punctuation">}</span>
+
+     <span class="token comment" spellcheck="true">// non-default routes need to be annotated with http methods</span>
+
      <span class="token annotation builtin">@Get</span> <span class="token keyword">val</span> summary <span class="token operator">:</span> Action <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">&quot;Nothing to do here :(!&quot;</span> <span class="token punctuation">}</span> 
 
-     <span class="token comment" spellcheck="true">// all routes get automatic paths from field name, we can override the default by </span>
-     <span class="token comment" spellcheck="true">// using @Path annotation</span>
-     <span class="token annotation builtin">@Path</span><span class="token punctuation">(</span><span class="token string">&quot;/dancers&quot;</span><span class="token punctuation">)</span>
-     <span class="token annotation builtin">@Get</span> <span class="token keyword">val</span> listDancers <span class="token operator">:</span> Action <span class="token operator">=</span> <span class="token punctuation">{</span> userService<span class="token punctuation">.</span><span class="token function">getDancers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+     <span class="token comment" spellcheck="true">// all non-default routes get automatic paths from field name, </span>
+     <span class="token comment" spellcheck="true">// use @Path annotation to override</span>
 
-     <span class="token comment" spellcheck="true">// by using Kotlins type system we can tell controller discovery to bind request values</span>
-     <span class="token comment" spellcheck="true">// to lambdas parameters</span>
-     <span class="token comment" spellcheck="true">// check out controller discovery docs for more info</span>
+     <span class="token annotation builtin">@Get</span> <span class="token annotation builtin">@Path</span><span class="token punctuation">(</span><span class="token string">&quot;/dancers&quot;</span><span class="token punctuation">)</span>
+     <span class="token keyword">val</span> listDancers <span class="token operator">:</span> Action <span class="token operator">=</span> <span class="token punctuation">{</span> userService<span class="token punctuation">.</span>dancers <span class="token punctuation">}</span>
+
+     <span class="token comment" spellcheck="true">// use a lambda with an M receiver and parameters that represent the</span>
+     <span class="token comment" spellcheck="true">// values you need in your request</span>
+     <span class="token comment" spellcheck="true">//</span>
+     <span class="token comment" spellcheck="true">// in this example you path param `:shirt` would be bound to `shirt`</span>
+     <span class="token comment" spellcheck="true">// and request body would be bound to `detailsDto`</span>
+     <span class="token comment" spellcheck="true">//</span>
+     <span class="token comment" spellcheck="true">// check controller discovery docs for more info </span>
+
      <span class="token annotation builtin">@Post</span> <span class="token annotation builtin">@Path</span><span class="token punctuation">(</span><span class="token string">&quot;/details/:shirt/nonsensical/&quot;</span><span class="token punctuation">)</span>
      <span class="token keyword">val</span> nonsensical M<span class="token punctuation">.</span><span class="token punctuation">(</span>String<span class="token punctuation">,</span> DetailsDto<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> Any <span class="token operator">=</span> <span class="token punctuation">{</span>
          shirt<span class="token punctuation">,</span> detailsDto <span class="token operator">-&gt;</span> <span class="token string">&quot;What are you doing?&quot;</span>
@@ -363,7 +374,7 @@ in mutant setup:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight"],"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Mutant","gitbook":"*"},"file":{"path":"quickstart/quickstart.md","mtime":"2017-03-02T15:06:48.259Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-02T15:09:00.219Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight"],"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Mutant","gitbook":"*"},"file":{"path":"quickstart/quickstart.md","mtime":"2017-03-02T15:29:32.696Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-02T15:32:08.334Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
