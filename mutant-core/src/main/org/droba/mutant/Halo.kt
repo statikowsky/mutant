@@ -3,6 +3,9 @@ package org.droba.mutant
 import org.droba.mutant.dummy.DummyEngine
 import org.droba.mutant.pluggables.HaloEngine
 
+typealias Handler = (MutantRequest) -> MutantResponse
+typealias Middleware = (Handler) -> Handler
+
 class Halo {
 
     companion object Builder {
@@ -12,18 +15,18 @@ class Halo {
             halo.validate()
             halo.start()
         }
-        fun middleWare(middle : ((MutantRequest) -> MutantResponse) -> (MutantRequest) -> MutantResponse) = middle
+        fun middleWare(middle : Middleware) = middle
     }
 
     var host = "localhost"
     var port = 8080
 
     var engine  : HaloEngine = DummyEngine()
-    var handler : ((MutantRequest) -> MutantResponse)? = null
+    var handler : Handler? = null
 
     var WSsendText : ((String) -> Unit)? = null
 
-    inline fun wrap(middleWare: ((MutantRequest) -> MutantResponse) -> (MutantRequest) -> MutantResponse) {
+    inline fun wrap(middleWare: Middleware) {
         if (handler == null)        throw RuntimeException("In Halo setup you MUST specify a handler.")
         handler = middleWare(handler!!)
     }
