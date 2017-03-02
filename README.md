@@ -3,7 +3,7 @@
 Mutant is a _very WIP_ Kotlin web kit aiming to be developer friendly.  
 Fun and frictionless is the guiding mantra.
 
-A tiny "Hello world" example:
+A tiny "Hello world" example:  
 `Start.kt`
 ```kotlin
 import org.droba.mutantStarterPack.mutant
