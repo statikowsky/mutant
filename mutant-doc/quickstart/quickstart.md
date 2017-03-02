@@ -185,21 +185,32 @@ in mutant setup:
 `controllers/UserController.kt`
 ```kotlin
    object UserController {
-     val get    : Action = act { "Sry no users here yet!" } // will map to GET  /user/:id
-     val create : Action = act { "Nothing to update yet!" } // will map to POST /user
+     // default routes
+     //
+     // get will map to GET `/user/:id`
+     // create will map to POST `/user`
+
+     val get    : Action = act { "Sry no users here yet!" } 
+     val create : Action = act { "Nothing to update yet!" }
 
      // non-default routes need to be annotated with http methods
-     // check out controller discovery docs for more info
+
      @Get val summary : Action = { "Nothing to do here :(!" } 
      
-     // all routes get automatic paths from field name, we can override the default by 
-     // using @Path annotation
-     @Path("/dancers")
-     @Get val listDancers : Action = { userService.getDancers() }
-     
-     // by using Kotlins type system we can tell controller discovery to bind request values
-     // to lambdas parameters
-     // check out controller discovery docs for more info
+     // all non-default routes get automatic paths from field name, 
+     // use @Path annotation to override
+
+     @Get @Path("/dancers")
+     val listDancers : Action = { userService.dancers }
+
+     // use a lambda with an M receiver and parameters that represent the
+     // values you need in your request
+     //
+     // in this example you path param `:shirt` would be bound to `shirt`
+     // and request body would be bound to `detailsDto`
+     //
+     // check controller discovery docs for more info 
+
      @Post @Path("/details/:shirt/nonsensical/")
      val nonsensical M.(String, DetailsDto) -> Any = {
      	shirt, detailsDto -> "What are you doing?"
