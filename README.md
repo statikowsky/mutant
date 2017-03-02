@@ -3,15 +3,19 @@
 Mutant is a _very WIP_ Kotlin web kit aiming to be developer friendly.  
 Fun and frictionless is the guiding mantra.
 
+A tiny "Hello world" example:
+`Start.kt`
 ```kotlin
+import org.droba.mutantStarterPack.mutant
 
-mutant {
-	get("/") { "Hello world!" }
+fun main (args : Array<String>) {
+  mutant {
+      get("/") { "Hello World!" }
+  }
 }
 ```
 
-
-Visit [docs](https://statikowsky.github.io/mutant/) for more information.
+Visit [docs](https://statikowsky.github.io/mutant/) to find out more.
 
 
 #### Todo
