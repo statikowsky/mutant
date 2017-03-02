@@ -1,13 +1,15 @@
 # Mutant
 
-Mutant is a _very WIP_ Kotlin web kit aiming to be developer friendly,  
-fun and frictionless is the guiding mantra.
+Mutant is a _very WIP_ Kotlin web kit aiming to be developer friendly.  
+Fun and frictionless is the guiding mantra.
 
 ```kotlin
+
 mutant {
 	get("/") { "Hello world!" }
 }
 ```
+
 
 Visit [docs](https://statikowsky.github.io/mutant/) for more information.
 
