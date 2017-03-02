@@ -188,7 +188,7 @@ in mutant setup:
      val get    : Action = act { "Sry no users here yet!" } // will map to GET  /user/:id
      val create : Action = act { "Nothing to update yet!" } // will map to POST /user
 
-     // non-default routes need to be annoted with http methods
+     // non-default routes need to be annotated with http methods
      // check out controller discovery docs for more info
      @Get val summary : Action = { "Nothing to do here :(!" } 
      
