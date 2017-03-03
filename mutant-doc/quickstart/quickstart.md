@@ -6,8 +6,7 @@ To get started quick with Mutant use `mutant-starter-pack` a _mostly_ sane
 collection of Mutant modules. Once you are in no rush you can pick and choose
 the modules you _really_ need.
 
-We will now make a quick overview of modules include in `mutant-starter-pack`. 
-It'll be light on the details but you can always follow the doc link to find out more!
+We will now make a quick overview of modules included in `mutant-starter-pack`. 
 
 Remember to add `mutant-starter-pack` dependency in your build system of choice.
 In case you are using `gradle` add:
@@ -62,7 +61,7 @@ Some of the info you can get from `req`:
 ```kotlin
   req.params      // get url params  ( ?id=slimyJelly )
   req.pathParams  // get path params ( /creature/undeadJelly )
-  req.formParams  // get form params ( from x-www-form-urlencoded ) 
+  req.formParams  // get form params ( x-www-form-urlencoded ) 
   req.body        // get req body
   req.headers     // get req headers
   req.cookies     // get cookies
