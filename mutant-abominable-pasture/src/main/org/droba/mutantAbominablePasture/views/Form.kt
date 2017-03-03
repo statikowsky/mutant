@@ -6,7 +6,7 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.declaredMemberProperties
 import kotlin.reflect.defaultType
 
-class Thing(val name: String, val surname: String, val age: Int)
+class ThingForm(val name: String, val surname: String, val age: Int)
 
 object TestForm {
     fun view () : String {
@@ -14,7 +14,7 @@ object TestForm {
             h1 { +"Form" }
             div {
                 p { +"Hello "}
-                formFor<Thing>("/test-not-working")
+                formFor<ThingForm>("/test-not-working")
             }
         }
     }

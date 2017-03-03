@@ -43,7 +43,7 @@ class ControllerDiscovery(
 
     val skipMethods = listOf("equals", "hashCode", "toString")
     val reservedMembers = listOf("index", "get", "delete", "update", "create")
-    val controllerAnnotations = listOf(Get::class, Post::class, Delete::class, Put::class)
+    val controllerAnnotations = listOf(Get::class, Post::class, Delete::class, Put::class, Patch::class)
 
     fun discoverControllers() {
 
@@ -205,6 +205,7 @@ class ControllerDiscovery(
                 "Post"      -> mutant.registerRoute(Method.POST,    route, action)
                 "Delete"    -> mutant.registerRoute(Method.DELETE,  route, action)
                 "Put"       -> mutant.registerRoute(Method.PUT,     route, action)
+                "Patch"     -> mutant.registerRoute(Method.PATCH,   route, action)
                 else        -> log.error("Could not add this member, unknown annotation :(")
             }
         }

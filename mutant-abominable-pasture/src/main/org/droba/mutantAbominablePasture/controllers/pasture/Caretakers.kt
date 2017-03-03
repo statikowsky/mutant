@@ -15,41 +15,37 @@ class Caretakers {
 
     private val log = KotlinLogging.logger { }
 
-    val get : M.(Int) -> Any = {
-        id -> ok()
-    }
+    val get : M.(Int) -> Any =
+        { id -> ok() }
 
-    val index : Action = {
-        "Hello from Caretakers!"
-    }
+    val index : Action =
+        { "Hello from Caretakers!" }
 
-    val create : M.(CaretakerDto) -> Any = { dto ->
-        log.info { "Hello there ! ${dto.name} ${dto.surname}" }
-        json(dto)
-    }
+    val create : M.(CaretakerDto) -> Any =
+        { dto ->
+            log.info { "Hello there ! ${dto.name} ${dto.surname}" }
+            json(dto)
+        }
 
-    val update : M.(CaretakerDto) -> Any = {
-        dto -> ok()
-    }
+    val update : M.(CaretakerDto) -> Any =
+        { dto -> ok() }
 
-    val delete : M.(Int) -> Any = {
-        id -> ok()
-    }
+    val delete : M.(Int) -> Any =
+        { id -> ok() }
 
-    @Get val search : M.(String) -> Any = {
-        query -> "You searched for caretakers with $query"
-    }
+    @Get val search : M.(String) -> Any =
+        { query -> "You searched for caretakers with $query" }
 
     @Post @Path("/:caretakerId/:boxName/create-pill")
-    val createPillForCaretaker : M.(Int, String, PillDto) -> Any = {
-        caretakerId, boxName, pillDto ->
+    val createPillForCaretaker : M.(Int, String, PillDto) -> Any =
+        { caretakerId, boxName, pillDto ->
 
-        val pill = GsonJsonRenderer.gson.toJsonTree(pillDto)
+            val pill = GsonJsonRenderer.gson.toJsonTree(pillDto)
 
-        jsonObject(
+            jsonObject(
                 "caretakerId" to caretakerId,
                 "boxName" to boxName,
                 "pill" to pill
-        )
-    }
+            )
+        }
 }

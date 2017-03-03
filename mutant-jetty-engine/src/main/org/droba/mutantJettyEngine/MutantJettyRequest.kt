@@ -1,13 +1,13 @@
-package org.droba.mutantJettyEmbeddedServlet
+package org.droba.mutantJettyEngine
 
 import org.droba.mutant.Method
 import org.droba.mutant.MutantRequest
+import org.droba.mutant.pluggables.MutantSession
+import org.eclipse.jetty.server.Request
 import java.util.stream.Collectors
 import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpSession
 
-class JettyMutantRequest(val request: HttpServletRequest, val reqMethod: Method) : MutantRequest() {
+class MutantJettyRequest(val request: Request) : MutantRequest() {
 
     init {
         request.characterEncoding = "UTF-8"
@@ -20,8 +20,19 @@ class JettyMutantRequest(val request: HttpServletRequest, val reqMethod: Method)
     override val host: String
         get() = request.remoteHost
 
-    override val method: Method
-        get() = reqMethod
+    override val method: Method by lazy {
+        when(request.method) {
+            "GET"       -> Method.GET
+            "POST"      -> Method.POST
+            "PUT"       -> Method.PUT
+            "DELETE"    -> Method.DELETE
+            "PATCH"     -> Method.PATCH
+            "HEAD"      -> Method.HEAD
+            "OPTIONS"   -> Method.OPTIONS
+            "TRACE"     -> Method.TRACE
+            else -> throw Exception("Could not map request method")
+        }
+    }
 
     override val protocol: String
         get() = request.protocol
@@ -57,8 +68,17 @@ class JettyMutantRequest(val request: HttpServletRequest, val reqMethod: Method)
                 .toMap()
     }
 
-    override val attributes: List<String>
-        get() = request.attributeNames.toList()
+    override val queryParams: Map<String, String>
+        get() = TODO("not implemented")
+
+    override val queryMultiParams: Map<String, List<String>>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+
+    override val formParams: Map<String, String>
+        get() = TODO("not implemented")
+
+    override val formMultiParams: Map<String, List<String>>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     override val contentLength: Int
         get() = request.contentLength
@@ -66,8 +86,8 @@ class JettyMutantRequest(val request: HttpServletRequest, val reqMethod: Method)
     override val contentType: String
         get() = request.contentType ?: ""
 
-    override val session: HttpSession
-        get() = request.session
+    override val session: MutantSession
+        get() = throw Exception("Sessions be dead")
 
     override val isJson by lazy { !contentType.isNullOrBlank() && contentType.startsWith("application/json") }
 

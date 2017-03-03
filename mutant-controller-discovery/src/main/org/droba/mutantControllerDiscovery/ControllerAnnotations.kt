@@ -18,6 +18,10 @@ annotation class Put
 
 @Target(AnnotationTarget.PROPERTY)
 @Retention(AnnotationRetention.RUNTIME)
+annotation class Patch
+
+@Target(AnnotationTarget.PROPERTY)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Path(val path: String)
 
 @Target(AnnotationTarget.CLASS)

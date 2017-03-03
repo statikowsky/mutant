@@ -36,7 +36,7 @@ class MutantModelBinder : ModelBinder {
 
     private fun jsonConverter(type: KType, req: MutantRequest) : Any {
         val klass = kotlinKTypeToClassMap[type]
-                ?: Exception("No KType saved in MutantModelBinder")
+                ?: throw Exception("No KType `$type` saved in MutantModelBinder")
 
         return GsonJsonRenderer.gson.fromJson(req.body, klass as Class<*>)
     }

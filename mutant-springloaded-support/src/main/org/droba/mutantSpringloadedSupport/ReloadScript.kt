@@ -8,7 +8,7 @@ fun FlowContent.reloadScript() = script {
     unsafe {
         //language=JavaScript
         +"""
-                    var exampleSocket = new WebSocket(url("/mutantws"));
+                    var exampleSocket = new WebSocket(url("/"));
                     exampleSocket.onmessage = function(e) {
 
                         console.log(e);
