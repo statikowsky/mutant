@@ -15,7 +15,7 @@ fun main (args : Array<String>) {
 }
 ```
 
-Visit [docs](https://statikowsky.github.io/mutant/) or `mutant-abominable-pasture` example project to find out more.
+Visit [docs](https://statikowsky.github.io/mutant/) or [`mutant-abominable-pasture`](https://github.com/statikowsky/mutant/tree/master/mutant-abominable-pasture) example project to find out more.
 
 ### Features
 
