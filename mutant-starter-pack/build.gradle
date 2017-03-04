@@ -3,10 +3,10 @@ version '1.0-SNAPSHOT'
 
 dependencies {
     compile project(":mutant-core")
-    compile project(":mutant-jetty-embedded-servlet")
     compile project(":mutant-handlebars-template-renderer")
     compile project(":mutant-gson-json-renderer")
     compile project(":mutant-naive-router")
+    compile project(":mutant-jetty-engine")
 
     compile 'com.github.salomonbrys.kodein:kodein:3.1.0'
     compile 'com.github.salomonbrys.kodein:kodein-conf:3.1.0'

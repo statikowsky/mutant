@@ -1,7 +1,6 @@
 rootProject.name = 'mutant'
 include 'mutant-core'
 include 'mutant-starter-pack'
-include 'mutant-jetty-embedded-servlet'
 include 'mutant-handlebars-template-renderer'
 include 'mutant-gson-json-renderer'
 include 'mutant-naive-router'
@@ -9,4 +8,5 @@ include 'mutant-abominable-pasture'
 include 'mutant-eye'
 include 'mutant-controller-discovery'
 include 'mutant-springloaded-support'
+include 'mutant-jetty-engine'
 

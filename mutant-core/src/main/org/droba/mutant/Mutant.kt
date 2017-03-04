@@ -5,7 +5,7 @@ import org.droba.mutant.dummy.DummyRouter
 import org.droba.mutant.pluggables.MutantRouter
 import org.slf4j.LoggerFactory
 
-enum class Method { GET, POST, DELETE, PUT, HEAD, OPTIONS, TRACE }
+enum class Method { GET, POST, DELETE, PATCH, PUT, HEAD, OPTIONS, TRACE }
 
 data class M(val req: MutantRequest)
 
@@ -53,6 +53,7 @@ class Mutant {
     fun post    (route: String, action: Action) = registerRoute(POST,   route, action)
     fun delete  (route: String, action: Action) = registerRoute(DELETE, route, action)
     fun put     (route: String, action: Action) = registerRoute(PUT,    route, action)
+    fun patch   (route: String, action: Action) = registerRoute(PATCH,  route, action)
     fun head    (route: String, action: Action) = registerRoute(HEAD,   route, action)
     fun options (route: String, action: Action) = registerRoute(OPTIONS,route, action)
     fun trace   (route: String, action: Action) = registerRoute(TRACE,  route, action)

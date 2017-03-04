@@ -6,7 +6,7 @@ dependencies {
 
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.0.v20161208'
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.0.v20161208'
-    compile 'org.stagemonitor:stagemonitor-web:0.28.0'
+
     compile group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
     compile group: 'org.eclipse.jetty.websocket', name: 'javax-websocket-server-impl', version: '9.4.0.v20161208'
 }

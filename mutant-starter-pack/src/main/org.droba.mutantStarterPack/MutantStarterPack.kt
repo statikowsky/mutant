@@ -5,7 +5,7 @@ import org.droba.mutant.Mutant
 import org.droba.mutantGsonJsonRenderer.GsonJsonRenderer
 import org.droba.mutantGsonJsonRenderer.json
 import org.droba.mutantHandlebarsTemplateRenderer.view
-import org.droba.mutantJettyEmbeddedServlet.Jetty
+import org.droba.mutantJettyEngine.MutantJettyServer
 import org.droba.mutantNaiveRouter.NaiveRouter
 
 fun mutant(mutantConfig: Mutant.() -> Unit) {
@@ -34,7 +34,7 @@ fun haloMutant(mutantConfig: Mutant.() -> Unit, haloConfig: (Halo.() -> Unit)? =
     }
 
     Halo.setup {
-        engine  = Jetty()
+        engine  = MutantJettyServer()
         handler = mutant.handler
 
         if (haloConfig != null) haloConfig()
