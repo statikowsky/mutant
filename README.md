@@ -1,4 +1,4 @@
-# Mutant
+<img src="https://raw.githubusercontent.com/statikowsky/mutant/master/mutant-doc/images/little_mutant_logo.png" height="80">
 
 Mutant is a _very WIP_ Kotlin web kit aiming to be developer friendly.  
 Fun and frictionless is the guiding mantra.
@@ -15,25 +15,26 @@ fun main (args : Array<String>) {
 }
 ```
 
-Visit [docs](https://statikowsky.github.io/mutant/) to find out more.
+Visit [docs](https://statikowsky.github.io/mutant/) or `mutant-abominable-pasture` example project to find out more.
 
+### Features
 
-#### Todo
+- simple DSL for routes
+- live reload with [springloaded module](https://github.com/statikowsky/mutant/tree/master/mutant-springloaded-support)
+- easy request and response handling
+- work with JSON easily
+- opt in auto wired controllers with param and model binding
+- modular, pick what you need throw away the rest
+- middleware
 
-There is a TODO for each module.  
+#### On the way
 
-Global TODO:
-- [ ] extract old mutant jooq code into `mutant-jooq` module
-- [ ] extract old mutant hikari code into `mutant-hikari` module
-- [ ] extract old mutant flyway code into `mutant-flyway` module
-- [ ] see if old mutant diagnostics are salvageable or just write new for `mutant-eye`
-- [ ] websocket support
-- [ ] stream support
-- [ ] route to controller 'n reverse
-- [ ] simple job runner
-- [ ] kotlinx form gen
-- [ ] write a bunch of docs
-
+- db modules - hikari as pool, jooq as sql dsl and flyway for migrations 
+- kotlin.x module - better integration with kotlinx.html (form helpers etc.)
+- eye module - simple req and db perf monitoring with app diagnostics
+- websockets support
+- jobs module - job runner
+- streaming support
 
 #### License   
 
