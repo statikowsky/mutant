@@ -65,7 +65,7 @@ object MultiparamActionUtil {
             val args = mutableListOf<Any>()
 
             req.pathParams.map { param -> findArgIndexAndValueByNamePartial(param) }
-                    .plus(req.params.map { param -> findArgIndexAndValueByNamePartial(param) })
+                    .plus(req.queryParams.map { param -> findArgIndexAndValueByNamePartial(param) })
                     .forEach { argIndexAndVal -> args.add(argIndexAndVal.first, argIndexAndVal.second) }
 
             if ( args.getOrNull(indexOfLastParam) == null)

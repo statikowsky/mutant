@@ -5,7 +5,6 @@ import org.droba.mutant.pluggables.HaloEngine
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.ServerConnector
 import org.eclipse.jetty.server.handler.HandlerList
-import org.eclipse.jetty.websocket.server.WebSocketHandler
 
 class MutantJettyServer : HaloEngine {
 

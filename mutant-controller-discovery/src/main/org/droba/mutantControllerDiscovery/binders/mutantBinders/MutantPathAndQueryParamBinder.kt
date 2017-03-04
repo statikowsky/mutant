@@ -16,7 +16,7 @@ class MutantPathAndQueryParamBinder : PathAndQueryParamBinder {
             put(Long::class.defaultType,    String::toLong)
             put(Float::class.defaultType,   String::toFloat)
             put(Double::class.defaultType,  String::toDouble)
-            put(Char::class.defaultType,    String::toDouble)
+            put(Boolean::class.defaultType, String::toBoolean)
         }
     }
 

@@ -68,17 +68,37 @@ class MutantJettyRequest(val request: Request) : MutantRequest() {
                 .toMap()
     }
 
-    override val queryParams: Map<String, String>
-        get() = TODO("not implemented")
+    override val queryParams: Map<String, String> by lazy {
+        request.parameterMap // trigger jetty to init queryParams
+        request.queryParameters
+                .filter { it.value.size == 1 }
+                .map { it.key to it.value[0] }
+                .toMap()
+    }
 
-    override val queryMultiParams: Map<String, List<String>>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override val queryMultiParams: Map<String, List<String>> by lazy {
+        request.parameterMap // trigger jetty to init queryParams
+        request.queryParameters
+                .filter { it.value.size > 1 }
+                .map { it.key to it.value }
+                .toMap()
+    }
 
-    override val formParams: Map<String, String>
-        get() = TODO("not implemented")
+    override val formParams: Map<String, String> by lazy {
+        request.parameterMap
+                .filterNot { request.queryParameters.keys.contains(it.key) }
+                .filter { it.value.size == 1 }
+                .map { it.key to it.value[0] }
+                .toMap()
+    }
 
-    override val formMultiParams: Map<String, List<String>>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override val formMultiParams: Map<String, List<String>> by lazy {
+        request.parameterMap
+                .filterNot { request.queryParameters.keys.contains(it.key) }
+                .filter { it.value.size > 1 }
+                .map { it.key to it.value.asList() }
+                .toMap()
+    }
 
     override val contentLength: Int
         get() = request.contentLength
@@ -91,7 +111,7 @@ class MutantJettyRequest(val request: Request) : MutantRequest() {
 
     override val isJson by lazy { !contentType.isNullOrBlank() && contentType.startsWith("application/json") }
 
-    override val isForm by lazy { contentType == "x-www-form-urlencoded" }
+    override val isForm by lazy { !contentType.isNullOrBlank() && contentType.endsWith("x-www-form-urlencoded") }
 
     override var pathParams = mapOf<String, String>()
 }
