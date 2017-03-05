@@ -16,6 +16,10 @@ import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import kotlin.jvm.internal.Lambda
 import kotlin.reflect.*
+import kotlin.reflect.full.defaultType
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.reflect
 
 fun Mutant.discoverControllersAndModels() {
@@ -41,9 +45,9 @@ class ControllerDiscovery(
 
     private val log = KotlinLogging.logger {}
 
-    val skipMethods = listOf("equals", "hashCode", "toString")
-    val reservedMembers = listOf("index", "get", "delete", "update", "create")
-    val controllerAnnotations = listOf(Get::class, Post::class, Delete::class, Put::class, Patch::class)
+    val skipMethods             = listOf("equals", "hashCode", "toString")
+    val reservedMembers         = listOf("index", "get", "delete", "update", "create")
+    val controllerAnnotations   = listOf(Get::class, Post::class, Delete::class, Put::class, Patch::class)
 
     fun discoverControllers() {
 
@@ -128,7 +132,7 @@ class ControllerDiscovery(
                         return@memberIter
                     }
 
-                    if (lambdaIntrospect.parameters[0].type != M::class.defaultType) {
+                    if (lambdaIntrospect.parameters[0].type != M::class.starProjectedType) {
                         log.error { "Incorrect lambda type. This lambda does not have a M receiver." }
                         return@memberIter
                     }
