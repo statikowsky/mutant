@@ -5,6 +5,8 @@ import mu.KotlinLogging
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import kotlin.reflect.defaultType
+import kotlin.reflect.full.defaultType
+import kotlin.reflect.full.starProjectedType
 
 private val log = KotlinLogging.logger {}
 
@@ -27,7 +29,7 @@ fun MutantModelBinder.discoverModels(modelPackage: String = "dtos") {
     refs.getSubTypesOf(Object::class.java)
             .forEach {
                 log.debug { "Storing model type: ${it.typeName}" }
-                this.store(it.kotlin.defaultType, it)
+                this.store(it.kotlin.starProjectedType, it)
             }
 }
 

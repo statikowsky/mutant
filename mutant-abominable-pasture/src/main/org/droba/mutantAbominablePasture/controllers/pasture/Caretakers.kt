@@ -16,7 +16,7 @@ class Caretakers {
     private val log = KotlinLogging.logger { }
 
     val get : M.(Int) -> Any =
-        { id -> ok() }
+        { id -> id }
 
     val index : Action =
         { "Hello from Caretakers!" }
@@ -28,13 +28,16 @@ class Caretakers {
         }
 
     val update : M.(CaretakerDto) -> Any =
-        { dto -> ok() }
+        { dto -> json(dto) }
 
     val delete : M.(Int) -> Any =
-        { id -> ok() }
+        { id ->
+            log.info { "Id: `$id`" }
+            ok()
+        }
 
     @Get val search : M.(String) -> Any =
-        { query -> "You searched for caretakers with $query" }
+        { query -> "You searched for caretakers with `$query`" }
 
     @Post @Path("/:caretakerId/:boxName/create-pill")
     val createPillForCaretaker : M.(Int, String, PillDto) -> Any =

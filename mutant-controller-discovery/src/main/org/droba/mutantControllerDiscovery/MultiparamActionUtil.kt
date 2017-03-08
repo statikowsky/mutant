@@ -79,6 +79,7 @@ object MultiparamActionUtil {
         return indexOfLambaParam to argValue
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun getInvokerFor(actionLambda: Lambda) : (List<Any>) -> Any {
         return when (actionLambda) {
             is Function2<*, *, *>                       -> { args: List<Any> -> (actionLambda as Function2<Any, Any, Any>).invoke(args[0], args[1]) }

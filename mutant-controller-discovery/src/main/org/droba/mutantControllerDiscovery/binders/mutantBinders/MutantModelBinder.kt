@@ -6,6 +6,8 @@ import org.droba.mutantControllerDiscovery.binders.ModelBinder
 import org.droba.mutantGsonJsonRenderer.GsonJsonRenderer
 import kotlin.reflect.KType
 import kotlin.reflect.defaultType
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.primaryConstructor
 
 fun modelBinder (modelConfig: MutantModelBinder.() -> Unit) : MutantModelBinder {
@@ -29,7 +31,7 @@ class MutantModelBinder : ModelBinder {
     val kotlinKTypeToClassMap = mutableMapOf<KType, Class<*>>()
 
     inline fun <reified T: Any> store()
-            = kotlinKTypeToClassMap.put(T::class.defaultType, T::class.java)
+            = kotlinKTypeToClassMap.put(T::class.starProjectedType, T::class.java)
 
     fun store(kType: KType, javaClass: Class<*>)
             = kotlinKTypeToClassMap.put(kType, javaClass)
@@ -49,7 +51,7 @@ class MutantModelBinder : ModelBinder {
         val klass = kotlinKTypeToClassMap[type]
                 ?: throw Exception("No KType `$type` saved in MutantModelBinder")
 
-        return GsonJsonRenderer.gson.fromJson(req.body, klass as Class<*>)
+        return GsonJsonRenderer.gson.fromJson(req.body, klass)
     }
 
     fun formParamsConverter(type: KType, req: MutantRequest) : Any {
@@ -71,13 +73,13 @@ class MutantModelBinder : ModelBinder {
 
         primaryCtor.parameters.forEach {
             when (it.type) {
-                kotlin.String::class.defaultType    -> ctorParams.add(req.params[it.name].toString())
-                kotlin.Boolean::class.defaultType   -> ctorParams.add(req.params[it.name]?.toBoolean())
-                kotlin.Int::class.defaultType       -> ctorParams.add(req.params[it.name]?.toInt())
-                kotlin.Long::class.defaultType      -> ctorParams.add(req.params[it.name]?.toLong())
-                kotlin.Float::class.defaultType     -> ctorParams.add(req.params[it.name]?.toFloat())
-                kotlin.Double::class.defaultType    -> ctorParams.add(req.params[it.name]?.toDouble())
-                else                                -> log.warn { "Cannot map ctor param, unknown type `${it.type}" }
+                kotlin.String::class.starProjectedType    -> ctorParams.add(req.params[it.name].toString())
+                kotlin.Boolean::class.starProjectedType   -> ctorParams.add(req.params[it.name]?.toBoolean())
+                kotlin.Int::class.starProjectedType       -> ctorParams.add(req.params[it.name]?.toInt())
+                kotlin.Long::class.starProjectedType      -> ctorParams.add(req.params[it.name]?.toLong())
+                kotlin.Float::class.starProjectedType     -> ctorParams.add(req.params[it.name]?.toFloat())
+                kotlin.Double::class.starProjectedType    -> ctorParams.add(req.params[it.name]?.toDouble())
+                else                                      -> log.warn { "Cannot map ctor param, unknown type `${it.type}" }
             }
         }
 

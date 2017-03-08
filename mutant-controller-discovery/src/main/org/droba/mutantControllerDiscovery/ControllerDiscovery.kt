@@ -142,6 +142,7 @@ class ControllerDiscovery(
                     }
                     else {
                         try {
+                            @Suppress("UNCHECKED_CAST")
                             actionLambda as Action
                         } catch (e: Exception) {
                             log.warn { "Skipping member as we could not cast the return type to M.() -> Any (Action)" }

@@ -35,9 +35,9 @@ class Mutant {
     val handler = { req: MutantRequest -> this.handle(req) }
     var router : MutantRouter = DummyRouter()
     var onError: M.(Message) -> MutantResponse
-            = { message -> MutantResponse(content = "There was an error with your application.", responseCode = 500) }
+            = { MutantResponse(content = "There was an error with your application.", responseCode = 500) }
     var on404: M.(Message) -> MutantResponse
-            = { message -> MutantResponse(content = "404", responseCode = 404) }
+            = { MutantResponse(content = "404", responseCode = 404) }
 
     private val resultConverters = mutableListOf<(Any) -> MutantResponse?>()
 

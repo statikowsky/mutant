@@ -4,6 +4,7 @@ import org.droba.mutant.MutantHalt
 import org.droba.mutantControllerDiscovery.binders.PathAndQueryParamBinder
 import kotlin.reflect.KType
 import kotlin.reflect.defaultType
+import kotlin.reflect.full.starProjectedType
 
 class MutantPathAndQueryParamBinder : PathAndQueryParamBinder {
 
@@ -11,12 +12,12 @@ class MutantPathAndQueryParamBinder : PathAndQueryParamBinder {
 
     init {
         with(binders) {
-            put(String::class.defaultType,  { string -> string })
-            put(Int::class.defaultType,     String::toInt)
-            put(Long::class.defaultType,    String::toLong)
-            put(Float::class.defaultType,   String::toFloat)
-            put(Double::class.defaultType,  String::toDouble)
-            put(Boolean::class.defaultType, String::toBoolean)
+            put(String::class.starProjectedType,  { string -> string })
+            put(Int::class.starProjectedType,     String::toInt)
+            put(Long::class.starProjectedType,    String::toLong)
+            put(Float::class.starProjectedType,   String::toFloat)
+            put(Double::class.starProjectedType,  String::toDouble)
+            put(Boolean::class.starProjectedType, String::toBoolean)
         }
     }
 
