@@ -5,5 +5,5 @@ dependencies {
     compile project(":mutant-core")
 
     compile group: 'org.springframework', name: 'springloaded', version: '1.2.6.RELEASE'
-    compile "org.jetbrains.kotlinx:kotlinx.html.jvm:0.5.12"
+    compile 'org.jetbrains.kotlinx:kotlinx-html-jvm:0.6.3'
 }

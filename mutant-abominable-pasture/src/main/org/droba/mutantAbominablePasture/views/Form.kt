@@ -3,8 +3,8 @@ package org.droba.mutantAbominablePasture.views
 import kotlinx.html.*
 import org.droba.mutantAbominablePasture.views.containers.mainDiv
 import kotlin.reflect.KProperty1
-import kotlin.reflect.declaredMemberProperties
-import kotlin.reflect.defaultType
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.starProjectedType
 
 class ThingForm(val name: String, val surname: String, val age: Int)
 
@@ -53,9 +53,9 @@ inline fun <reified T: Any> FlowContent.formFor(uri: String) {
 fun <T> generateFormItem(it: KProperty1<T, *>) {
 
     when(it.returnType) {
-        String::class.defaultType -> generateStringFormItem(it)
-        Number::class.defaultType -> generateNumberFormItem(it)
-        Collection::class.defaultType -> whatDoWeDoNow(it)
+        String::class.starProjectedType     -> generateStringFormItem(it)
+        Number::class.starProjectedType     -> generateNumberFormItem(it)
+        Collection::class.starProjectedType -> whatDoWeDoNow(it)
     }
 }
 
