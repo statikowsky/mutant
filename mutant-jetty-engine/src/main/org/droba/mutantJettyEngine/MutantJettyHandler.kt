@@ -18,7 +18,7 @@ class MutantJettyHandler(val halo: Halo) : AbstractHandler() {
             val mutRes = halo.handler!!.invoke(mutantRequest)
 
             res!!.contentType = mutRes.contentType
-            res.status      = mutRes.responseCode
+            res.status        = mutRes.responseCode
             
             mutRes.headers
                     .forEach { res.setHeader(it.key, it.value) }
