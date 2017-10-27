@@ -1,8 +1,9 @@
 package org.droba.mutantAbominablePasture.views.containers
 
+import org.droba.mutantSpringloadedSupport.reloadScript
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
-import org.droba.mutantSpringloadedSupport.reloadScript
+import org.droba.mutantSpringloadedSupport.liveReloadConnectionImage
 
 fun mainDiv(divContents: DIV.() -> Unit): String {
     return createHTML()

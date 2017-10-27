@@ -124,7 +124,7 @@ fun main(args: Array<String>) {
         wrap(SecurePasture.middleware)
         wrap(AddMutatedByMutantHeader.middleware)
 
-        registerReloadNotifier()
+        registerReloadNotifier("org.droba.mutantAbominablePasture")
     })
 }
 
